@@ -1,47 +1,57 @@
 package main
 
 import (
-	"fmt"
 	"sort"
 )
 
 func main() {
-	fmt.Println("Hello, World!")
+
 }
 
-func maxTaxiEarnings(n int, rides [][]int) int64 {
-	sort.Sort(RidesSlice(rides))
-	notRideMax := make([]int64, n+1)
-	rideIndex := 0
-	i := 1
-outLoop:
-	for ; i <= n; i++ {
-		notRideMax[i] = notRideMax[i-1]
-		for rides[rideIndex][1] <= i {
-			rideStartIndex := rides[rideIndex][0]
-			rideStopIndex := rides[rideIndex][1]
-			gain := (int64)(rideStopIndex - rides[rideIndex][0] + rides[rideIndex][2])
-			thisRideResult := gain + notRideMax[rideStartIndex]
-			notRideMax[rideStopIndex] = max(notRideMax[rideStopIndex], thisRideResult)
-			rideIndex++
-			if rideIndex >= len(rides) {
-				i++
-				break outLoop
-			}
+func combinationSum(candidates []int, target int) [][]int {
+	sort.Sort(IntSplice(candidates))
+	return calcCombination(0, candidates, target)
+}
+
+func calcCombination(candidateIndex int, candidates []int, target int) [][]int {
+	resultSplice := [][]int{}
+	l := len(candidates)
+	for i := candidateIndex; i < l; i++ {
+		candiate := candidates[i]
+		if candiate > target {
+			break
+		}
+		if candiate == target {
+			singleCombination := []int{candiate}
+			resultSplice = append(resultSplice, singleCombination)
+			break
+		}
+		sonCombinations := calcCombination(i, candidates, target-candiate)
+		for _, singleSonCombination := range sonCombinations {
+			singleCombination := []int{candiate}
+			singleCombination = append(singleCombination, singleSonCombination...)
+			resultSplice = append(resultSplice, singleCombination)
 		}
 	}
-	return notRideMax[i-1]
+	return resultSplice
 }
 
-type RidesSlice [][]int
+type IntSplice []int
 
-func (p RidesSlice) Len() int           { return len(p) }
-func (p RidesSlice) Less(i, j int) bool { return p[i][1] < p[j][1] }
-func (p RidesSlice) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
+func (h IntSplice) Len() int           { return len(h) }
+func (h IntSplice) Less(i, j int) bool { return h[i] < h[j] }
+func (h IntSplice) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
 
-func max(a, b int64) int64 {
+func max(a, b int) int {
 	if a > b {
 		return a
 	}
 	return b
+}
+
+func abs(a int) int {
+	if a > 0 {
+		return a
+	}
+	return -a
 }
