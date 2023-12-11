@@ -1,8 +1,9 @@
-package server
+package main
 
 import (
 	"fmt"
 	"net"
+	"slg-golang/server"
 )
 
 func ListenPort() {
@@ -17,6 +18,10 @@ func ListenPort() {
 			fmt.Println("accept failed, err:", err)
 			continue
 		}
-		ProcessConn(conn)
+		server.ProcessConn(conn)
 	}
+}
+
+func main() {
+	ListenPort()
 }

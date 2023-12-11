@@ -4,13 +4,6 @@ import (
 	"sort"
 )
 
-func main() {
-	bytes := []byte{1, 2, 22, 75, 22, 11, 75, 234, 77}
-	splice := bytes[5:6:7]
-	//out := lengthEncoderDecoder.Encode()
-	println(splice)
-}
-
 func combinationSum(candidates []int, target int) [][]int {
 	sort.Sort(IntSplice(candidates))
 	return calcCombination(0, candidates, target)

@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"net"
-	"slg-golang/server/encoderDecoder/lengthEncoderDecoder"
+	"slg-golang/encoderDecoder/lengthEncoderDecoder"
 )
 
 func ProcessConn(conn net.Conn) {
@@ -32,17 +32,24 @@ func (c *Channel) process() {
 		bufArr := c.InBuf
 		n, err := reader.Read(bufArr[:]) // 读取数据
 		if err != nil {
-			fmt.Println("read from conn failed, err:", err)
+			fmt.Println("read from conn failed, writeErr:", err)
 			break
 		}
+
+		//recvStr := string(bufArr[:n])
+		//fmt.Println("收到client端发来的数据：", recvStr)
+		//_, writeErr := conn.Write([]byte(recvStr))
+		//if writeErr != nil {
+		//	fmt.Println("read from conn failed, writeErr:", writeErr)
+		//} // 发送数据
 
 		outArr := c.LengthDecoder.Decode(bufArr[:n])
 		for _, singleOut := range outArr {
 			recvStr := string(singleOut)
 			fmt.Println("收到client端发来的数据：", recvStr)
-			_, err := conn.Write([]byte(recvStr))
-			if err != nil {
-				fmt.Println("read from conn failed, err:", err)
+			_, writeErr := conn.Write([]byte(recvStr))
+			if writeErr != nil {
+				fmt.Println("read from conn failed, writeErr:", writeErr)
 			} // 发送数据
 		}
 	}
