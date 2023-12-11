@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"net"
-	"slg-golang/server/decoder"
+	"slg-golang/server/encoderDecoder/lengthEncoderDecoder"
 )
 
 func ProcessConn(conn net.Conn) {
@@ -12,7 +12,7 @@ func ProcessConn(conn net.Conn) {
 		channel := Channel{
 			InBuf:         [1024]byte{},
 			Conn:          &conn,
-			LengthDecoder: decoder.NewLengthDecoder(),
+			LengthDecoder: lengthEncoderDecoder.NewLengthDecoder(),
 		}
 		channel.process()
 	}()
@@ -21,7 +21,7 @@ func ProcessConn(conn net.Conn) {
 type Channel struct {
 	InBuf         [1024]byte
 	Conn          *net.Conn
-	LengthDecoder *decoder.LengthDecoder
+	LengthDecoder *lengthEncoderDecoder.LengthDecoder
 }
 
 func (c *Channel) process() {
