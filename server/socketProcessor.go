@@ -27,8 +27,8 @@ type Channel struct {
 func (c *Channel) process() {
 	conn := *(c.Conn)
 	defer conn.Close() // 关闭连接
+	reader := bufio.NewReader(conn)
 	for {
-		reader := bufio.NewReader(conn)
 		bufArr := c.InBuf
 		n, err := reader.Read(bufArr[:]) // 读取数据
 		if err != nil {
