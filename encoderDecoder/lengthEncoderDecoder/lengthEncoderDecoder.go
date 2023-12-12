@@ -1,7 +1,7 @@
 package lengthEncoderDecoder
 
 import (
-	"slg-golang/math"
+	"github.com/somePeopleFireAndWood/slg-golang/math"
 )
 
 type LengthDecoder struct {

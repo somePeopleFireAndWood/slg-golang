@@ -3,8 +3,8 @@ package server
 import (
 	"bufio"
 	"fmt"
+	"github.com/somePeopleFireAndWood/slg-golang/encoderDecoder/lengthEncoderDecoder"
 	"net"
-	"slg-golang/encoderDecoder/lengthEncoderDecoder"
 )
 
 func ProcessConn(conn net.Conn) {

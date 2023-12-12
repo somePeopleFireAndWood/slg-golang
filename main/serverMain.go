@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
+	"github.com/somePeopleFireAndWood/slg-golang/server"
 	"net"
-	"slg-golang/server"
 )
 
 func ListenPort() {
