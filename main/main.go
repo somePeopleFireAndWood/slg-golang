@@ -51,3 +51,36 @@ func abs(a int) int {
 	}
 	return -a
 }
+
+func secondGreaterElement(nums []int) []int {
+	ans := make([]int, len(nums))
+	firstStack := []int{}
+	secondStack := []int{}
+	for i, num := range nums {
+		toIndex := len(secondStack) - 1
+		for ; toIndex >= 0; toIndex-- {
+			if nums[secondStack[toIndex]] < num {
+				ans[secondStack[toIndex]] = num
+			} else {
+				break
+			}
+		}
+		secondStack = secondStack[:toIndex+1]
+		toIndex = len(firstStack) - 1
+		for ; toIndex >= 0; toIndex-- {
+			if nums[firstStack[toIndex]] >= num {
+				break
+			}
+		}
+		secondStack = append(secondStack, firstStack[toIndex+1:]...)
+		firstStack = firstStack[:toIndex+1]
+		firstStack = append(firstStack, i)
+	}
+	for i := range secondStack {
+		ans[secondStack[i]] = -1
+	}
+	for i := range firstStack {
+		ans[firstStack[i]] = -1
+	}
+	return ans
+}
