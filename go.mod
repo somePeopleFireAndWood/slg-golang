@@ -1,3 +1,3 @@
-module slg-golang
+module github/fireAndWood/golang-slg
 
 go 1.21
