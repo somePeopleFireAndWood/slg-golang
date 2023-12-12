@@ -1,3 +1,3 @@
-module github/fireAndWood/golang-slg
+module github.com/somePeopleFireAndWood/golang-slg
 
-go 1.21
+go 1.21.5
